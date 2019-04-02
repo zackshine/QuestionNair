@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model List<Question>
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+<form asp-action="SubmitAnswer" method="post">
+    <table>
+        @{ int i = 0;}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @(i + 1)
+                    .
+                    @Html.DisplayFor(modelItem => item.Content)
+                    <input type="hidden" asp-for="@item.Id" name="userAnswers[@i].QuestionId" />
+                </td>
+            </tr>
+            <tr>
+                @{ int j = 0;}
+                @foreach (var option in item.Options)
+                {
+                    <td>
+                        <input type="checkbox" name="userAnswers[@i].SelectedAnswer" value="@option.Text" />
+                        @option.Text
+                        .
+                        @option.Description
+                    </td>
+                    j++;
+                }
+
+            </tr>
+            i++;
+        }
+
+    </table>
+    <input type="submit" value="Submit" class="btn btn-primary" />
+</form>
+
